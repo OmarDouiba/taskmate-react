@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../assets/logo.svg';
 
 function Header() {
+  const [theme, setTheme] = useState(
+    JSON.parse(localStorage.getItem('theme')) || 'medium'
+  );
+
+  useEffect(() => {
+    document.documentElement.removeAttribute('class');
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme));
+  }, [theme]);
   return (
     <header>
       <div className="logo">
@@ -9,12 +20,30 @@ function Header() {
         <span>Taskmate</span>
       </div>
       <div className="themeSelector">
-        <div className="light"></div>
-        <div className="medium"></div>
-        <div className="dark"></div>
-        <div className="gOne"></div>
-        <div className="gTwo"></div>
-        <div className="gThree"></div>
+        <span
+          onClick={() => setTheme('light')}
+          className={theme === 'light' ? 'light activeTheme' : 'light'}
+        ></span>
+        <span
+          onClick={() => setTheme('medium')}
+          className={theme === 'medium' ? 'medium activeTheme' : 'medium'}
+        ></span>
+        <span
+          onClick={() => setTheme('dark')}
+          className={theme === 'dark' ? 'dark activeTheme' : 'dark'}
+        ></span>
+        <span
+          onClick={() => setTheme('gOne')}
+          className={theme === 'gOne' ? 'gOne activeTheme' : 'gOne'}
+        ></span>
+        <span
+          onClick={() => setTheme('gTwo')}
+          className={theme === 'gTwo' ? 'gTwo activeTheme' : 'gTwo'}
+        ></span>
+        <span
+          onClick={() => setTheme('gThree')}
+          className={theme === 'gThree' ? 'gThree activeTheme' : 'gThree'}
+        ></span>
       </div>
     </header>
   );
